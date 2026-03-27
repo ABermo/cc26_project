@@ -1,33 +1,70 @@
 extends Node2D
 
-# Created File
-
-# Branched Fork
-
-
 
 var note = 0
-var pattern = [[]]
+var pattern = [[],[],[]]
 var iteration = 0
 var replaying_active = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_instrument(0, 2)
-	
-
-	
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if $Button.button_pressed:
+	if $Replay_Current.button_pressed:
 		replaying_active = true
-		for n in range(len(pattern[iteration])):
-			play_note(pattern[iteration][n])
-			await get_tree().create_timer(0.5).timeout
+		if len(pattern[iteration]) == 0:
+			play_note(1)
+		else:
+			for n in range(len(pattern[iteration])):
+				play_note(pattern[iteration][n])
+				await get_tree().create_timer(0.5).timeout
 		
 		replaying_active = false
+		
+	if $"Save Track 1".button_pressed:
+		iteration += 1
+	
+	if $"Play Track 1".button_pressed:
+		replaying_active = true
+		if len(pattern[0]) == 0:
+			play_note(1)
+		else:
+			for n in range(len(pattern[0])):
+				play_note(pattern[0][n])
+				await get_tree().create_timer(0.5).timeout
+		
+		replaying_active = false
+	
+	if $"Save Track 2".button_pressed:
+		iteration += 1
+	
+	if $"Play Track 2".button_pressed:
+		replaying_active = true
+		if len(pattern[1]) == 0:
+			play_note(1)
+		else:
+			for n in range(len(pattern[1])):
+				play_note(pattern[1][n])
+				await get_tree().create_timer(0.5).timeout
+		
+		replaying_active = false
+	
+	if $"Save Track 3".button_pressed:
+		iteration += 1
+	
+	if $"Play Track 3".button_pressed:
+		replaying_active = true
+		if len(pattern[2]) == 0:
+			play_note(1)
+		else:
+			for n in range(len(pattern[2])):
+				play_note(pattern[2][n])
+				await get_tree().create_timer(0.5).timeout
+		
+		replaying_active = false
+		
 
 # setting instrument as Piano
 func set_instrument(channel, instrument):
@@ -103,6 +140,6 @@ func _input(event):
 # main function for saving patterns and playing notes
 func playing(note):
 	if replaying_active == false:
-		pattern[iteration].append(int(note))
+		pattern[iteration].append(note)
 		
 		play_note(note)
