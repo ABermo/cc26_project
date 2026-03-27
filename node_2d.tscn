@@ -18,49 +18,57 @@ offset_bottom = 40.0
 text = "Replay"
 
 [node name="Save Track 1" type="Button" parent="." unique_id=1410688805]
-offset_left = 11.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 17.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 115.0
+offset_bottom = 45.0
 text = "Save Track 1
 "
 
 [node name="Save Track 2" type="Button" parent="." unique_id=1311022803]
-offset_left = 12.0
-offset_top = 93.0
-offset_right = 116.0
-offset_bottom = 124.0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 115.0
+offset_bottom = 135.0
 text = "Save Track 2
 "
 
 [node name="Save Track 3" type="Button" parent="." unique_id=1469479631]
-offset_left = 11.0
-offset_top = 175.0
+offset_left = 10.0
+offset_top = 190.0
 offset_right = 115.0
-offset_bottom = 206.0
+offset_bottom = 225.0
 text = "Save Track 3
 "
 
 [node name="Play Track 1" type="Button" parent="." unique_id=927475320]
-offset_left = 15.0
-offset_top = 52.0
+offset_left = 10.0
+offset_top = 55.0
 offset_right = 115.0
-offset_bottom = 83.0
+offset_bottom = 90.0
 text = "Play Track 1
 "
 
 [node name="Play Track 2" type="Button" parent="." unique_id=1193583665]
-offset_left = 14.0
-offset_top = 133.0
-offset_right = 114.0
-offset_bottom = 164.0
+offset_left = 10.0
+offset_top = 145.0
+offset_right = 115.0
+offset_bottom = 176.0
 text = "Play Track 2
 "
 
 [node name="Play Track 3" type="Button" parent="." unique_id=1975077037]
-offset_left = 16.0
-offset_top = 216.0
-offset_right = 116.0
-offset_bottom = 247.0
+offset_left = 10.0
+offset_top = 235.0
+offset_right = 115.0
+offset_bottom = 270.0
 text = "Play Track 3
+"
+
+[node name="Exit" type="Button" parent="." unique_id=1892961]
+offset_left = 1100.0
+offset_top = 279.0
+offset_right = 1137.0
+offset_bottom = 314.0
+text = "Exit
 "

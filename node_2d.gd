@@ -9,8 +9,11 @@ var replaying_active = false
 const WHITE_KEYS_NUM = 10
 const BLACK_KEYS_NUM = 6
 
+# used for what keys are 'active'
 var white_keys = [false, false, false, false, false, false, false, false, false, false, false]
 var black_keys = [false, false, false, false, false, false]
+
+# used for drawing piano
 var width = 1152
 var height = 648
 
@@ -30,7 +33,10 @@ func _process(_float) -> void:
 			replay(pattern[3])
 		
 	if $"Save Track 1".button_pressed:
-		pattern[0] = pattern[3]
+		if len(pattern[3]) != 0:
+			pattern[0] = pattern[3].duplicate()
+			pattern[3].clear()
+
 	
 	if $"Play Track 1".button_pressed:
 		if len(pattern[0]) == 0:
@@ -41,7 +47,9 @@ func _process(_float) -> void:
 			replay(pattern[0])
 	
 	if $"Save Track 2".button_pressed:
-		pattern[1] = pattern[3]
+		if len(pattern[3]) != 0:
+			pattern[1] = pattern[3].duplicate()
+			pattern[3].clear()
 	
 	if $"Play Track 2".button_pressed:
 		if len(pattern[1]) == 0:
@@ -52,8 +60,10 @@ func _process(_float) -> void:
 			replay(pattern[1])
 	
 	if $"Save Track 3".button_pressed:
-		pattern[2] = pattern[3]
-	
+		if len(pattern[3]) != 0:
+			pattern[2] = pattern[3].duplicate()
+			pattern[3].clear()
+		
 	if $"Play Track 3".button_pressed:
 		if len(pattern[2]) == 0:
 			play_note(1)
@@ -61,7 +71,10 @@ func _process(_float) -> void:
 			play_note_off(1)
 		else:
 			replay(pattern[2])
-		
+	
+	
+	if $Exit.button_pressed:
+		get_tree().change_scene_to_file("res://main_menu.tscn")
 
 # setting instrument as Piano
 func set_instrument(channel, instrument):
@@ -167,7 +180,7 @@ func key_to_note(key):
 		KEY_SEMICOLON: 
 			white_keys[9] = true
 			return 67
-		_: return null
+		_: return 0
 
 
 func active_key(key):
@@ -203,6 +216,8 @@ func replay(sequence):
 
 # drawing piano
 func _draw() -> void:
+	draw_rect(Rect2(0,0,width,height), Color.SKY_BLUE)
+	
 	var key_width = float(width) / WHITE_KEYS_NUM
 	var piano_height = float(height) / 2
 	

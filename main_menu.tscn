@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b26x4t5410jv3"]
+
+[ext_resource type="Script" uid="uid://x7ula02ggbcp" path="res://main_menu.gd" id="1_06t4h"]
+
+[node name="MainMenu" type="Control" unique_id=2062716695]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_06t4h")
+
+[node name="Label" type="Label" parent="." unique_id=1575842238]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 300.0
+offset_right = 802.0
+offset_bottom = 357.0
+text = "Creative Coding Project 2026"
+
+[node name="Create" type="Button" parent="." unique_id=1020538669]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 122.0
+offset_right = 128.0
+offset_bottom = 130.0
+text = "Create"
