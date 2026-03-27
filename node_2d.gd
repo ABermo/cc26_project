@@ -2,8 +2,8 @@ extends Node2D
 
 
 var note = 0
-var pattern = [[],[],[]]
-var iteration = 0
+var pattern = [[],[],[],[]]
+var iteration = 3
 var replaying_active = false
 
 # Called when the node enters the scene tree for the first time.
@@ -13,57 +13,45 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if $Replay_Current.button_pressed:
-		replaying_active = true
-		if len(pattern[iteration]) == 0:
+		if len(pattern[3]) == 0:
 			play_note(1)
+			await get_tree().create_timer(0.3).timeout
+			play_note_off(1)
 		else:
-			for n in range(len(pattern[iteration])):
-				play_note(pattern[iteration][n])
-				await get_tree().create_timer(0.5).timeout
-		
-		replaying_active = false
+			replay(pattern[3])
 		
 	if $"Save Track 1".button_pressed:
-		iteration += 1
+		pattern[0] = pattern[3]
 	
 	if $"Play Track 1".button_pressed:
-		replaying_active = true
 		if len(pattern[0]) == 0:
 			play_note(1)
+			await get_tree().create_timer(0.3).timeout
+			play_note_off(1)
 		else:
-			for n in range(len(pattern[0])):
-				play_note(pattern[0][n])
-				await get_tree().create_timer(0.5).timeout
-		
-		replaying_active = false
+			replay(pattern[0])
 	
 	if $"Save Track 2".button_pressed:
-		iteration += 1
+		pattern[1] = pattern[3]
 	
 	if $"Play Track 2".button_pressed:
-		replaying_active = true
 		if len(pattern[1]) == 0:
 			play_note(1)
+			await get_tree().create_timer(0.3).timeout
+			play_note_off(1)
 		else:
-			for n in range(len(pattern[1])):
-				play_note(pattern[1][n])
-				await get_tree().create_timer(0.5).timeout
-		
-		replaying_active = false
+			replay(pattern[1])
 	
 	if $"Save Track 3".button_pressed:
-		iteration += 1
+		pattern[2] = pattern[3]
 	
 	if $"Play Track 3".button_pressed:
-		replaying_active = true
 		if len(pattern[2]) == 0:
 			play_note(1)
+			await get_tree().create_timer(0.3).timeout
+			play_note_off(1)
 		else:
-			for n in range(len(pattern[2])):
-				play_note(pattern[2][n])
-				await get_tree().create_timer(0.5).timeout
-		
-		replaying_active = false
+			replay(pattern[2])
 		
 
 # setting instrument as Piano
@@ -83,59 +71,30 @@ func play_note(note):
 	m.channel = 0		
 	$MidiPlayer.receive_raw_midi_message(m)	
 
+# stop playing note
+func play_note_off(note):
+	var m = InputEventMIDI.new()
+	m.message = MIDI_MESSAGE_NOTE_ON
+	m.pitch = note
+	m.velocity = 0
+	m.channel = 0		
+	$MidiPlayer.receive_raw_midi_message(m)	
+
 # retrieve note value based on input
 func _input(event):
 	if replaying_active:
 		return
 
-	if Input.is_key_pressed(KEY_A):
-		note = 52
-		playing(note)
-	elif Input.is_key_pressed(KEY_S):
-		note = 53
-		playing(note)
-	elif Input.is_key_pressed(KEY_E):
-		note = 54
-		playing(note)
-	elif Input.is_key_pressed(KEY_D):
-		note = 55
-		playing(note)
-	elif Input.is_key_pressed(KEY_R):
-		note = 56
-		playing(note)
-	elif Input.is_key_pressed(KEY_F):
-		note = 57
-		playing(note)
-	elif Input.is_key_pressed(KEY_T):
-		note = 58
-		playing(note)
-	elif Input.is_key_pressed(KEY_G):
-		note = 59
-		playing(note)
-	elif Input.is_key_pressed(KEY_H):
-		note = 60
-		playing(note)
-	elif Input.is_key_pressed(KEY_U):
-		note = 61
-		playing(note)
-	elif Input.is_key_pressed(KEY_J):
-		note = 62
-		playing(note)
-	elif Input.is_key_pressed(KEY_I):
-		note = 63
-		playing(note)
-	elif Input.is_key_pressed(KEY_K):
-		note = 64
-		playing(note)
-	elif Input.is_key_pressed(KEY_L):
-		note = 65
-		playing(note)
-	elif Input.is_key_pressed(KEY_P):
-		note = 66
-		playing(note)
-	elif Input.is_key_pressed(KEY_SEMICOLON):
-		note = 67
-		playing(note)
+	if event is InputEventKey:
+		if event.is_pressed() and not event.is_echo():
+			note = key_to_note(event.keycode)
+			if note != 0:
+				playing(note)
+				play_note(note)
+		
+		elif event.is_released():
+			play_note_off(note)
+
 
 # main function for saving patterns and playing notes
 func playing(note):
@@ -143,3 +102,35 @@ func playing(note):
 		pattern[iteration].append(note)
 		
 		play_note(note)
+
+func key_to_note(key):
+	match key:
+		KEY_A: return 52
+		KEY_S: return 53
+		KEY_E: return 54
+		KEY_D: return 55
+		KEY_R: return 56
+		KEY_F: return 57
+		KEY_T: return 58
+		KEY_G: return 59
+		KEY_H: return 60
+		KEY_U: return 61
+		KEY_J: return 62
+		KEY_I: return 63
+		KEY_K: return 64
+		KEY_L: return 65
+		KEY_P: return 66
+		KEY_SEMICOLON: return 67
+		_: return null
+
+# replay function
+func replay(pattern):
+	replaying_active = true
+
+	for n in range(len(pattern)):
+		play_note(pattern[n])
+		await get_tree().create_timer(0.2).timeout
+		play_note_off(pattern[n])
+		await get_tree().create_timer(0.1).timeout
+		
+	replaying_active = false
