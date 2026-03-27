@@ -6,6 +6,13 @@ var pattern = [[],[],[],[]]
 var iteration = 3
 var replaying_active = false
 
+const WHITE_KEYS_NUM = 10
+const BLACK_KEYS_NUM = 5
+
+var width = 1152
+var height = 648
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_instrument(0, 2)
@@ -134,3 +141,27 @@ func replay(pattern):
 		await get_tree().create_timer(0.1).timeout
 		
 	replaying_active = false
+
+# drawing piano
+func _draw() -> void:
+	var key_width = width / WHITE_KEYS_NUM
+	var piano_height = height / 2
+	
+	draw_rect(Rect2(0, piano_height, width, piano_height), Color.WHITE)
+	
+	# white keys
+	for key in range(WHITE_KEYS_NUM + 1):
+		var x = key_width * key
+		draw_line(Vector2(x, piano_height), Vector2(x, height), Color.BLACK)
+
+	# black keys
+	draw_rect(Rect2(1.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(2.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(3.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(5.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(6.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(8.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
+
+	# looks weird so adding 2 keys to make it look more like a piano
+	draw_rect(Rect2(0 * key_width, piano_height, key_width * 0.25, piano_height * 0.5), Color.BLACK)
+	draw_rect(Rect2(9.75 * key_width, piano_height, key_width * 0.25, piano_height * 0.5), Color.BLACK)
