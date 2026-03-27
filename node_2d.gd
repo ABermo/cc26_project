@@ -4,8 +4,12 @@ extends Node2D
 
 # Branched Fork
 
-var note = 0
 
+
+var note = 0
+var pattern = [[]]
+var iteration = 0
+var replaying_active = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,7 +21,13 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if $Button.button_pressed:
+		replaying_active = true
+		for n in range(len(pattern[iteration])):
+			play_note(pattern[iteration][n])
+			await get_tree().create_timer(0.5).timeout
+		
+		replaying_active = false
 
 # setting instrument as Piano
 func set_instrument(channel, instrument):
@@ -36,38 +46,63 @@ func play_note(note):
 	m.channel = 0		
 	$MidiPlayer.receive_raw_midi_message(m)	
 
+# retrieve note value based on input
 func _input(event):
+	if replaying_active:
+		return
+
 	if Input.is_key_pressed(KEY_A):
 		note = 52
+		playing(note)
 	elif Input.is_key_pressed(KEY_S):
 		note = 53
+		playing(note)
 	elif Input.is_key_pressed(KEY_E):
 		note = 54
+		playing(note)
 	elif Input.is_key_pressed(KEY_D):
 		note = 55
+		playing(note)
 	elif Input.is_key_pressed(KEY_R):
 		note = 56
+		playing(note)
 	elif Input.is_key_pressed(KEY_F):
 		note = 57
+		playing(note)
 	elif Input.is_key_pressed(KEY_T):
 		note = 58
+		playing(note)
 	elif Input.is_key_pressed(KEY_G):
 		note = 59
+		playing(note)
 	elif Input.is_key_pressed(KEY_H):
 		note = 60
+		playing(note)
 	elif Input.is_key_pressed(KEY_U):
 		note = 61
+		playing(note)
 	elif Input.is_key_pressed(KEY_J):
 		note = 62
+		playing(note)
 	elif Input.is_key_pressed(KEY_I):
 		note = 63
+		playing(note)
 	elif Input.is_key_pressed(KEY_K):
 		note = 64
+		playing(note)
 	elif Input.is_key_pressed(KEY_L):
 		note = 65
+		playing(note)
 	elif Input.is_key_pressed(KEY_P):
 		note = 66
+		playing(note)
 	elif Input.is_key_pressed(KEY_SEMICOLON):
 		note = 67
-	
-	print(note)
+		playing(note)
+
+# main function for saving patterns and playing notes
+func playing(note):
+	if replaying_active == false:
+		pattern[iteration].append(int(note))
+		
+		play_note(note)

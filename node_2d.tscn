@@ -9,3 +9,9 @@ script = ExtResource("1_wtcfe")
 [node name="MidiPlayer" type="Node" parent="." unique_id=958671275]
 script = ExtResource("2_0e48y")
 soundfont = "res://Aspirin-Stereo.sf2"
+
+[node name="Button" type="Button" parent="." unique_id=595850838]
+offset_left = 302.0
+offset_top = 152.0
+offset_right = 346.0
+offset_bottom = 187.0
