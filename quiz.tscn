@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dviqayi6xi2cg"]
+
+[ext_resource type="Script" uid="uid://depef2n3kkl1m" path="res://quiz.gd" id="1_kninm"]
+
+[node name="Quiz" type="Node2D" unique_id=912587742]
+script = ExtResource("1_kninm")
+
+[node name="Exit" type="Button" parent="." unique_id=972328472]
+offset_left = 1100.0
+offset_top = 279.0
+offset_right = 1137.0
+offset_bottom = 314.0
+text = "Exit"

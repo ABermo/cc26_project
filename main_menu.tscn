@@ -13,16 +13,26 @@ script = ExtResource("1_06t4h")
 
 [node name="Label" type="Label" parent="." unique_id=1575842238]
 layout_mode = 0
-offset_left = 500.0
-offset_top = 300.0
-offset_right = 802.0
-offset_bottom = 357.0
+offset_left = 244.5
+offset_top = 149.5
+offset_right = 907.5
+offset_bottom = 216.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
 text = "Creative Coding Project 2026"
 
 [node name="Create" type="Button" parent="." unique_id=1020538669]
 layout_mode = 0
-offset_left = 120.0
-offset_top = 122.0
-offset_right = 128.0
-offset_bottom = 130.0
+offset_left = 90.0
+offset_top = 170.0
+offset_right = 150.0
+offset_bottom = 201.0
 text = "Create"
+
+[node name="Quiz" type="Button" parent="." unique_id=604864804]
+layout_mode = 0
+offset_left = 1002.0
+offset_top = 170.0
+offset_right = 1062.0
+offset_bottom = 201.0
+text = "Quiz"

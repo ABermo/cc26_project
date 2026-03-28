@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cvdr5gclg0oey"]
 
-[ext_resource type="Script" uid="uid://5jl6rdsflri5" path="res://node_2d.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://5jl6rdsflri5" path="res://create_music.gd" id="1_wtcfe"]
 [ext_resource type="Script" uid="uid://bf1vnufu7na6x" path="res://addons/midi/MidiPlayer.gd" id="2_0e48y"]
 
-[node name="Node2D" type="Node2D" unique_id=1696997980]
+[node name="Create_Music" type="Node2D" unique_id=1696997980]
 script = ExtResource("1_wtcfe")
 
 [node name="MidiPlayer" type="Node" parent="." unique_id=958671275]

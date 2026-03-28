@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 
 var height = 648
 var width = 1152
@@ -10,11 +10,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if $Create.button_pressed:
-		get_tree().change_scene_to_file("res://create_music.tscn")
-		
-	if $Quiz.button_pressed:
-		get_tree().change_scene_to_file("res://quiz.tscn")
+	if $Exit.button_pressed:
+		get_tree().change_scene_to_file("res://main_menu.tscn")
 
 func _draw() -> void:
 	draw_rect(Rect2(0,0,width,height), Color.SKY_BLUE)
