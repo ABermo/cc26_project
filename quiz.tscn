@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://dviqayi6xi2cg"]
 
 [ext_resource type="Script" uid="uid://depef2n3kkl1m" path="res://quiz.gd" id="1_kninm"]
+[ext_resource type="Script" uid="uid://bf1vnufu7na6x" path="res://addons/midi/MidiPlayer.gd" id="2_k7kv1"]
 
 [node name="Quiz" type="Node2D" unique_id=912587742]
 script = ExtResource("1_kninm")
+
+[node name="MidiPlayer" type="Node" parent="." unique_id=1269827189]
+script = ExtResource("2_k7kv1")
+soundfont = "res://Aspirin-Stereo.sf2"
 
 [node name="Exit" type="Button" parent="." unique_id=972328472]
 offset_left = 1100.0
@@ -11,3 +16,47 @@ offset_top = 279.0
 offset_right = 1137.0
 offset_bottom = 314.0
 text = "Exit"
+
+[node name="Gamemode" type="Label" parent="." unique_id=2006080103]
+offset_left = 526.0
+offset_top = 10.0
+offset_right = 626.0
+offset_bottom = 33.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Gamemode: "
+
+[node name="Score" type="Label" parent="." unique_id=252739458]
+offset_left = 526.0
+offset_top = 43.0
+offset_right = 626.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score:"
+
+[node name="Easy" type="Button" parent="." unique_id=555138104]
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 82.0
+offset_bottom = 81.0
+text = "Easy"
+
+[node name="Medium" type="Button" parent="." unique_id=1495006481]
+offset_left = 10.0
+offset_top = 90.0
+offset_right = 82.0
+offset_bottom = 121.0
+text = "Medium"
+
+[node name="Hard" type="Button" parent="." unique_id=1095024801]
+offset_left = 10.0
+offset_top = 130.0
+offset_right = 82.0
+offset_bottom = 161.0
+text = "Hard"
+
+[node name="Infinite" type="Button" parent="." unique_id=1082109865]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 82.0
+offset_bottom = 41.0
+text = "Infinite"
