@@ -14,6 +14,7 @@ var black_notes = [54,56,58,61,63,66]
 
 var pattern = []
 var pattern_length = []
+var response = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,6 +36,7 @@ func _process(_delta: float) -> void:
 		pattern = []
 		pattern_length = 5
 		$Gamemode.text = 'Gamemode: Easy'
+		$Score.text = str('Score: ', score)
 		playing()
 	
 	if $Medium.button_pressed and not started:
@@ -42,6 +44,7 @@ func _process(_delta: float) -> void:
 		pattern = []
 		pattern_length = 10
 		$Gamemode.text = 'Gamemode: Medium'
+		$Score.text = str('Score: ', score)
 		playing()
 	
 	if $Hard.button_pressed and not started:
@@ -49,6 +52,7 @@ func _process(_delta: float) -> void:
 		pattern = []
 		pattern_length = 15
 		$Gamemode.text = 'Gamemode: Hard'
+		$Score.text = str('Score: ', score)
 		playing()
 
 func set_instrument(channel, instrument):
@@ -161,3 +165,71 @@ func active_key(key):
 		65: white_keys[8] = true
 		66: black_keys[5] = true
 		67: white_keys[9] = true
+
+
+
+func _input(event):
+	var note = 0
+	if started:
+		return
+
+	if event is InputEventKey:
+		if event.is_pressed() and not event.is_echo():
+			note = key_to_note(event.keycode)
+			if note != 0:
+				play_note(note)
+		
+		elif event.is_released():
+			play_note_off(note)
+			
+func key_to_note(key):
+	match key:
+		KEY_A: 
+			white_keys[0] = true
+			return 52
+		KEY_S: 
+			white_keys[1] = true
+			return 53
+		KEY_E: 
+			black_keys[0] = true
+			return 54
+		KEY_D: 
+			white_keys[2] = true
+			return 55
+		KEY_R: 
+			black_keys[1] = true
+			return 56
+		KEY_F: 
+			white_keys[3] = true
+			return 57
+		KEY_T: 
+			black_keys[2] = true
+			return 58
+		KEY_G: 
+			white_keys[4] = true
+			return 59
+		KEY_H: 
+			white_keys[5] = true
+			return 60
+		KEY_U: 
+			black_keys[3] = true
+			return 61
+		KEY_J: 
+			white_keys[6] = true
+			return 62
+		KEY_I: 
+			black_keys[4] = true
+			return 63
+		KEY_K: 
+			white_keys[7] = true
+			return 64
+		KEY_L: 
+			white_keys[8] = true
+			return 65
+		KEY_P: 
+			black_keys[5] = true
+			return 66
+		KEY_SEMICOLON: 
+			white_keys[9] = true
+			return 67
+		_: return 0
