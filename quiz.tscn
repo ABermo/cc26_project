@@ -35,28 +35,21 @@ text = "Score:"
 
 [node name="Easy" type="Button" parent="." unique_id=555138104]
 offset_left = 10.0
-offset_top = 50.0
+offset_top = 10.0
 offset_right = 82.0
-offset_bottom = 81.0
+offset_bottom = 41.0
 text = "Easy"
 
 [node name="Medium" type="Button" parent="." unique_id=1495006481]
 offset_left = 10.0
-offset_top = 90.0
+offset_top = 50.0
 offset_right = 82.0
-offset_bottom = 121.0
+offset_bottom = 81.0
 text = "Medium"
 
 [node name="Hard" type="Button" parent="." unique_id=1095024801]
 offset_left = 10.0
-offset_top = 130.0
+offset_top = 90.0
 offset_right = 82.0
-offset_bottom = 161.0
+offset_bottom = 121.0
 text = "Hard"
-
-[node name="Infinite" type="Button" parent="." unique_id=1082109865]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 82.0
-offset_bottom = 41.0
-text = "Infinite"

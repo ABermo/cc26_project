@@ -9,8 +9,8 @@ var started = false
 var responding = false
 
 var notes = [52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67]
-var white_keys = [false, false, false, false, false, false, false, false, false, false, false]
-var black_keys = [false, false, false, false, false, false]
+var white_keys = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+var black_keys = [0, 0, 0, 0, 0, 0]
 var white_notes = [52,53,55,57,59,60,62,64,65,67]
 var black_notes = [54,56,58,61,63,66]
 
@@ -28,17 +28,14 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if $Exit.button_pressed:
 		get_tree().change_scene_to_file("res://main_menu.tscn")
-		
-	if $Infinite.button_pressed and not started:
-		started = true
-		$Gamemode.text = 'Gamemode: Infinite'
-	
+
 	if $Easy.button_pressed and not started:
 		started = true
 		pattern = []
 		index_position = 0
 		response = []
 		pattern_length = 5
+		score = 0
 		$Gamemode.text = 'Gamemode: Easy'
 		$Score.text = str('Score: ', score)
 		playing()
@@ -49,6 +46,7 @@ func _process(_delta: float) -> void:
 		index_position = 0
 		response = []
 		pattern_length = 10
+		score = 0
 		$Gamemode.text = 'Gamemode: Medium'
 		$Score.text = str('Score: ', score)
 		playing()
@@ -59,6 +57,7 @@ func _process(_delta: float) -> void:
 		index_position = 0
 		response = []
 		pattern_length = 15
+		score = 0
 		$Gamemode.text = 'Gamemode: Hard'
 		$Score.text = str('Score: ', score)
 		playing()
@@ -83,31 +82,33 @@ func _draw() -> void:
 		var x = key_width * key
 		draw_line(Vector2(x, piano_height), Vector2(x, height), Color.BLACK)
 
-		if white_keys[key]:
+		if white_keys[key] == 1:
 			draw_rect(Rect2(x, piano_height, key_width, piano_height), Color.DIM_GRAY)
-	
+		elif white_keys[key] == 2:
+			draw_rect(Rect2(x, piano_height, key_width, piano_height), Color.WEB_PURPLE)
+			
 	# black keys
-	if black_keys[0]:
+	if black_keys[0] == 1:
 		draw_rect(Rect2(1.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(1.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
-	if black_keys[1]:
+	if black_keys[1] == 1:
 		draw_rect(Rect2(2.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(2.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
-	if black_keys[2]:
+	if black_keys[2] == 1:
 		draw_rect(Rect2(3.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(3.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
-	if black_keys[3]:
+	if black_keys[3] == 1:
 		draw_rect(Rect2(5.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(5.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
-	if black_keys[4]:
+	if black_keys[4] == 1:
 		draw_rect(Rect2(6.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(6.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
-	if black_keys[5]:
+	if black_keys[5] == 1:
 		draw_rect(Rect2(8.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.DIM_GRAY)
 	else:
 		draw_rect(Rect2(8.75 * key_width, piano_height, key_width * 0.5, piano_height * 0.5), Color.BLACK)
@@ -151,30 +152,48 @@ func play_note_off(pitch):
 	m.velocity = 0
 	m.channel = 0		
 	$MidiPlayer.receive_raw_midi_message(m)
-	white_keys = [false, false, false, false, false, false, false, false, false, false]
-	black_keys = [false, false, false, false, false, false]
+	white_keys = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	black_keys = [0, 0, 0, 0, 0, 0]
 	queue_redraw()
 	
 # function to find key which is playing played and mark it as active
 func active_key(key):
 	match key:
-		52: white_keys[0] = true
-		53: white_keys[1] = true
-		54: black_keys[0] = true
-		55: white_keys[2] = true
-		56: black_keys[1] = true
-		57: white_keys[3] = true
-		58: black_keys[2] = true
-		59: white_keys[4] = true
-		60: white_keys[5] = true
-		61: black_keys[3] = true
-		62: white_keys[6] = true
-		63: black_keys[4] = true
-		64: white_keys[7] = true
-		65: white_keys[8] = true
-		66: black_keys[5] = true
-		67: white_keys[9] = true
+		52: white_keys[0] = 1
+		53: white_keys[1] = 1
+		54: black_keys[0] = 1
+		55: white_keys[2] = 1
+		56: black_keys[1] = 1
+		57: white_keys[3] = 1
+		58: black_keys[2] = 1
+		59: white_keys[4] = 1
+		60: white_keys[5] = 1
+		61: black_keys[3] = 1
+		62: white_keys[6] = 1
+		63: black_keys[4] = 1
+		64: white_keys[7] = 1
+		65: white_keys[8] = 1
+		66: black_keys[5] = 1
+		67: white_keys[9] = 1
 
+func incorrect_key(key):
+	match key:
+		52: white_keys[0] = 2
+		53: white_keys[1] = 2
+		54: black_keys[0] = 2
+		55: white_keys[2] = 2
+		56: black_keys[1] = 2
+		57: white_keys[3] = 2
+		58: black_keys[2] = 2
+		59: white_keys[4] = 2
+		60: white_keys[5] = 2
+		61: black_keys[3] = 2
+		62: white_keys[6] = 2
+		63: black_keys[4] = 2
+		64: white_keys[7] = 2
+		65: white_keys[8] = 2
+		66: black_keys[5] = 2
+		67: white_keys[9] = 2
 
 # code brought over from create_music.gd to help with the recalling function
 func _input(event):
@@ -198,52 +217,52 @@ func _input(event):
 func key_to_note(key):
 	match key:
 		KEY_A: 
-			white_keys[0] = true
+			white_keys[0] = 1
 			return 52
 		KEY_S: 
-			white_keys[1] = true
+			white_keys[1] = 1
 			return 53
 		KEY_E: 
-			black_keys[0] = true
+			black_keys[0] = 1
 			return 54
 		KEY_D: 
-			white_keys[2] = true
+			white_keys[2] = 1
 			return 55
 		KEY_R: 
-			black_keys[1] = true
+			black_keys[1] = 1
 			return 56
 		KEY_F: 
-			white_keys[3] = true
+			white_keys[3] = 1
 			return 57
 		KEY_T: 
-			black_keys[2] = true
+			black_keys[2] = 1
 			return 58
 		KEY_G: 
-			white_keys[4] = true
+			white_keys[4] = 1
 			return 59
 		KEY_H: 
-			white_keys[5] = true
+			white_keys[5] = 1
 			return 60
 		KEY_U: 
-			black_keys[3] = true
+			black_keys[3] = 1
 			return 61
 		KEY_J: 
-			white_keys[6] = true
+			white_keys[6] = 1
 			return 62
 		KEY_I: 
-			black_keys[4] = true
+			black_keys[4] = 1
 			return 63
 		KEY_K: 
-			white_keys[7] = true
+			white_keys[7] = 1
 			return 64
 		KEY_L: 
-			white_keys[8] = true
+			white_keys[8] = 1
 			return 65
 		KEY_P: 
-			black_keys[5] = true
+			black_keys[5] = 1
 			return 66
 		KEY_SEMICOLON: 
-			white_keys[9] = true
+			white_keys[9] = 1
 			return 67
 		_: return 0
 
@@ -251,10 +270,14 @@ func key_to_note(key):
 func recalling(guess):
 	if guess[index_position] == pattern[index_position]:
 		score += 1
-	if abs(guess[index_position] - pattern[index_position]) == 1:
+	elif abs(guess[index_position] - pattern[index_position]) == 1:
 		score += 0.5
-	if abs(guess[index_position] - pattern[index_position]) == 2:
+		incorrect_key(pattern[index_position])
+	elif abs(guess[index_position] - pattern[index_position]) == 2:
 		score += 0.25
+		incorrect_key(pattern[index_position])
+	else:
+		incorrect_key(pattern[index_position])
 	index_position += 1
 	$Score.text = str('Score: ', score)
 	if index_position == pattern_length:
