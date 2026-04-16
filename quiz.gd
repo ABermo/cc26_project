@@ -4,7 +4,9 @@ var height = 648
 var width = 1152
 
 var score = 0
+var index_position = 0
 var started = false
+var responding = false
 
 var notes = [52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67]
 var white_keys = [false, false, false, false, false, false, false, false, false, false, false]
@@ -34,6 +36,8 @@ func _process(_delta: float) -> void:
 	if $Easy.button_pressed and not started:
 		started = true
 		pattern = []
+		index_position = 0
+		response = []
 		pattern_length = 5
 		$Gamemode.text = 'Gamemode: Easy'
 		$Score.text = str('Score: ', score)
@@ -42,6 +46,8 @@ func _process(_delta: float) -> void:
 	if $Medium.button_pressed and not started:
 		started = true
 		pattern = []
+		index_position = 0
+		response = []
 		pattern_length = 10
 		$Gamemode.text = 'Gamemode: Medium'
 		$Score.text = str('Score: ', score)
@@ -50,6 +56,8 @@ func _process(_delta: float) -> void:
 	if $Hard.button_pressed and not started:
 		started = true
 		pattern = []
+		index_position = 0
+		response = []
 		pattern_length = 15
 		$Gamemode.text = 'Gamemode: Hard'
 		$Score.text = str('Score: ', score)
@@ -123,6 +131,7 @@ func playing():
 		await get_tree().create_timer(0.5).timeout
 		
 	started = false
+	responding = true
 
 
 func play_note(pitch):
@@ -167,7 +176,7 @@ func active_key(key):
 		67: white_keys[9] = true
 
 
-
+# code brought over from create_music.gd to help with the recalling function
 func _input(event):
 	var note = 0
 	if started:
@@ -178,6 +187,10 @@ func _input(event):
 			note = key_to_note(event.keycode)
 			if note != 0:
 				play_note(note)
+				
+				if responding:
+					response.append(note)
+					recalling(response)
 		
 		elif event.is_released():
 			play_note_off(note)
@@ -233,3 +246,16 @@ func key_to_note(key):
 			white_keys[9] = true
 			return 67
 		_: return 0
+
+
+func recalling(guess):
+	if guess[index_position] == pattern[index_position]:
+		score += 1
+	if abs(guess[index_position] - pattern[index_position]) == 1:
+		score += 0.5
+	if abs(guess[index_position] - pattern[index_position]) == 2:
+		score += 0.25
+	index_position += 1
+	$Score.text = str('Score: ', score)
+	if index_position == pattern_length:
+		responding = false
