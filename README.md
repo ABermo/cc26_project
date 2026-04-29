@@ -6,9 +6,11 @@ Student Number: A00032216
 
 Class Group: TU850/A
 
-# Video
-
 # Screenshots
+
+![Main Scene Image](main_scene.png)
+![Create Image](create.png)
+![Quiz Image](quiz.png)
 
 # Project Description
 
