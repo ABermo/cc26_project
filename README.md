@@ -34,3 +34,16 @@ played to the user, before they try to recreate the array. The user plays a key 
 compared with the co-responding key in the array. If it is a match 1 point is added, off by 1, 0.5 is added and off by 2, 0.25.
 The drawing also changed slightly to display the correct answer to users, 0 represents a standard key, 1 is an active key, inputted by
 the user and 2 is the correct key in the array sequence.
+
+
+# What I am proud of in the assignment
+
+I'm proud that I was able to make the quiz work correctly, when starting this project I knew it would be possible but doubted whether
+or not I myself could do it. But with a lot of refractoring, making slight adjustions and just simply having patience I managed to get 
+it working, which I am very proud of.
+
+# What I learned
+
+I learn more niche techniques in Godot, such as how to change scenes inside the game which was really interesting. I also learned
+about how important it is to keep my code structured, as when it came to me having to refractor it, I really struggled making changes
+to the unstructured sections.
